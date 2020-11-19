@@ -51,7 +51,7 @@ mod nowmake {
                     match &result_metadata {
                         Err(_) => true,
                         Ok(value) => it.was_updated(&value.modified().unwrap()).unwrap_or_else(|error| {
-                            println!("Can't fetch last modified date of {}. {:?}", it.filename, error);
+                            eprintln!("Can't fetch last modified date of {}. {:?}", it.filename, error);
                             false
                         })
                     }
@@ -76,7 +76,7 @@ fn main() {
     let targets_text = match fs::read_to_string(nowmake::FILE_NAME) {
         Ok(content) => content,
         Err(error) => {
-            println!("Can't open the targets file ({}): {:?}", nowmake::FILE_NAME, error);
+            eprintln!("Can't open the targets file ({}): {:?}", nowmake::FILE_NAME, error);
             process::exit(1);
         }
     };
@@ -86,7 +86,7 @@ fn main() {
     for target in targets {
         if requested_targets.contains(&target.result) {
             match target.now_make() {
-                Err(error) => println!("Failed: {}", error),
+                Err(error) => eprintln!("Failed: {}", error),
                 Ok(_) => println!("Made {} now.", target.result)
             }
         }
