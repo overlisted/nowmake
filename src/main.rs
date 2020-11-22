@@ -23,8 +23,8 @@ fn main() {
     for target in targets {
         if requested_targets.contains(&target.result) {
             match target.now_make() {
-                Err(error) => eprintln!("Failed: {}", error),
                 Ok(_) => println!("Made {} now.", target.result)
+                Err(error) => eprintln!("Target {} failed: {}", target.result, error),
             }
         }
     }
