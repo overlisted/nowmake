@@ -3,7 +3,10 @@ use regex::Regex;
 
 pub const FILE_NAME: &str = "build.nowmake";
 pub const DEFAULT_TARGET_NAME: &str = "default";
-const TARGET_SYNTAX: &str = r"(.+):(.+)*\n\s*(.+)";
+
+lazy_static! {
+    static ref TARGET_SYNTAX: Regex = Regex::new(r"(.+):(.+)*\n\s*(.+)").unwrap();
+}
 
 struct Prerequisite {
     filename: String,
@@ -27,8 +30,7 @@ pub struct Target {
 
 impl Target { 
     pub fn read_from(data: &str) -> Vec<Target> {
-        let regex = Regex::new(TARGET_SYNTAX).unwrap();
-        regex.captures_iter(&data)
+        TARGET_SYNTAX.captures_iter(&data)
             .map(|it| 
                 Target { 
                     result: it[1].to_string(), 

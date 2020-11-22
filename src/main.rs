@@ -1,3 +1,6 @@
+#[macro_use]
+extern crate lazy_static;
+
 mod nowmake;
 use std::{env, fs, process};
 
