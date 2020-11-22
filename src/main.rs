@@ -28,6 +28,8 @@ fn main() {
                 Err(error) => eprintln!("Target {} failed: {}", target.result, error),
                 Ok(_) => println!("Made {} now.", name)
             }
+        } else {
+            eprintln!("Can't find target {}!", name);
         }
     }
 }
