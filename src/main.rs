@@ -21,10 +21,12 @@ fn main() {
     let targets = nowmake::Target::read_from(&targets_text);
     
     for target in targets {
-        if requested_targets.contains(&target.result) {
+        let name = &target.result;
+    
+        if requested_targets.contains(name) {
             match target.now_make() {
-                Ok(_) => println!("Made {} now.", target.result)
                 Err(error) => eprintln!("Target {} failed: {}", target.result, error),
+                Ok(_) => println!("Made {} now.", name)
             }
         }
     }
